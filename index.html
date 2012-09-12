@@ -1,0 +1,24 @@
+<html ng-app="rialabs" ng-controller="Ctrl">
+	<head>
+		<title>Angular Directive</title>
+		<meta charset="utf8">
+		<link rel="stylesheet" href="select2-2.1/select2.css">
+		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.min.js"></script>
+		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
+		<script type="text/javascript" src="select2-2.1/select2.min.js"></script>
+		<script type="text/javascript" src="jquery.mask.js"></script>
+		<script type="text/javascript" src="custom.js"></script>
+	</head>
+	<body>
+
+		<select style="width:600px" ng-model="estado" ria-select="cbEstados_config">
+			<option></option>
+			<option ng-repeat="estado in estados" value="{{estado.value}}" ng-cloak>{{estado.name}}</option>
+		</select>
+		<br>
+		<input type="text" ria-mask="99999-999" ng-model="cep"/>
+		<button ng-click="alterar()">Logar CEP</button>
+		<button ng-click="cep=''">Reset</button>
+
+	</body>
+</html>
