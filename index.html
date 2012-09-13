@@ -1,5 +1,5 @@
 <!doctype html>
-<html ng-app="rialabs">
+<html ng-app="rialabs"> <!-- determina que o documento todo estará a disposição do AngularJS como template -->
 	<head>
 		<title>Angular Directive</title>
 		<meta charset="utf8">
@@ -14,8 +14,15 @@
 	</head>
 	<body>
 
-		<div ng-controller="Ctrl">
+		<div ng-controller="Ctrl"><!-- A partir daqui, o controller Ctrl cuidará do comportamento -->
 			
+			<!--
+				O select é um elemento HTML padrão, que recebe algumas diretivas para se comportar
+				de forma a ser manipulado pelo AngularJS. 
+				- ng-model="estado" determina que a variavel estado no riaSelect.js receberá o valor selecionado no select.
+					Por outro lado, quando a variável for modificada no arquivo javascript, a alteração será refletida no select.
+				- ria-select é a diretiva que transforma o <select> no Select2. Necessita da inclusão do plugin. Ver no <header> deste documento. O valor passado para a diretiva (estados_config) está declarado no riaSelect.js e contém um objeto de configuração para o Select2. Este objeto será resgatado dentro da diretiva e utilizado.
+			-->
 			<select style="width:300px" ng-model="estado" ria-select="estados_config">
 				<option></option>
 				<option ng-repeat="estado in estados" value="{{estado.value}}" ng-cloak>{{estado.name}}</option>
@@ -36,6 +43,6 @@
 			<br>
 			Cidade: {{cidade}}
 
-		</div>
+		</div><!-- Final do escopo de atuação do controller Ctrl -->
 	</body>
 </html>
