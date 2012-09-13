@@ -8,13 +8,22 @@ var rialabs = angular.module('rialabs', [])
 			var el = jQuery(tElement);
 				el.select2();
 			return function ($scope, $element, $attrs, ngModel){
+				
 				el.select2($scope[$attrs.riaSelect] || {});
+				
 				el.on('change', function(){
-					ngModel.$setViewValue(el.select2('val'));
+					$scope.$apply(function() {
+						ngModel.$setViewValue(el.select2('val'));
+					});
 				});
+
 				ngModel.$render = function() {
-					el.select2('val', ngModel.$viewValue || -1);
+					el.select2('val', ngModel.$viewValue);
 				};
+
+				setTimeout(function () {
+					el.select2('val', ngModel.$viewValue);
+				});
 			}		
 		}
 	};
@@ -25,7 +34,7 @@ var rialabs = angular.module('rialabs', [])
 	var ng = $scope;
 
 	ng.salvar = function(){
-		console.log({cidade: ng.cidade, estado: ng.estado});
+		alert(JSON.stringify({cidade: ng.cidade, estado: ng.estado}));
 	};
 
 	ng.load = function(){
@@ -55,6 +64,9 @@ var rialabs = angular.module('rialabs', [])
 			{value: 'BHZ', name: 'Belo Horizonte'},
 			{value: 'CWB', name: 'Curitiba'}
 		];
+
+		ng.cidade = "CWB";
+		ng.estado = "PR";
 
 	}();
 });
