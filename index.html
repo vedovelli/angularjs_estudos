@@ -7,7 +7,7 @@
 		<style type="text/css">
 
 		</style>
-		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.min.js"></script>
+		<script type="text/javascript" src="http://code.angularjs.org/1.0.2/angular.js"></script>
 		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
 		<script type="text/javascript" src="select2-2.1/select2.min.js"></script>
 		<script type="text/javascript" src="jquery.mask.js"></script>
@@ -20,13 +20,15 @@
 			<option ng-repeat="estado in estados" value="{{estado.value}}" ng-cloak>{{estado.name}}</option>
 		</select>
 		<br>
-		{{estado}}
-		<br>
 		<select style="width:300px" ng-model="cidade" ria-select="cidades_config">
 			<option></option>
 			<option ng-repeat="cidade in cidades" value="{{cidade.value}}" ng-cloak>{{cidade.name}}</option>
 		</select>
 		<br>
-		{{cidade}}
+		<button ng-click="salvar()">Salvar</button>
+		<br>
+		<button ng-click="load()">Carregar</button>
+		<br>
+		<button ng-click="reset()">Reset</button>
 	</body>
 </html>

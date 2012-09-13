@@ -3,14 +3,18 @@ var rialabs = angular.module('rialabs', [])
 .directive('riaSelect', function(){
 	return {
 		restrict: 'A',
+		require: 'ngModel',
 		compile: function(tElement, tAttrs){
 			var el = jQuery(tElement);
 				el.select2();
-			return function ($scope, $element, $attrs){
+			return function ($scope, $element, $attrs, ngModel){
 				el.select2($scope[$attrs.riaSelect] || {});
 				el.on('change', function(){
-					$scope[$attrs.ngModel] = el.select2('val');
+					ngModel.$setViewValue(el.select2('val'));
 				});
+				ngModel.$render = function() {
+					el.select2('val', ngModel.$viewValue || -1);
+				};
 			}		
 		}
 	};
@@ -19,11 +23,22 @@ var rialabs = angular.module('rialabs', [])
 .controller('Ctrl', function($scope){
 	
 	var ng = $scope;
+
+	ng.salvar = function(){
+		console.log({cidade: ng.cidade, estado: ng.estado});
+	};
+
+	ng.load = function(){
+		ng.cidade = "BHZ";
+		ng.estado = "MG";		
+	};
+
+	ng.reset = function(){
+		ng.cidade = "";
+		ng.estado = "";		
+	};
 	
 	var init = function(){
-
-		ng.estado = "";
-		ng.cidade = "";
 
 		ng.estados_config = {allowClear:true, placeholder:'Selecione um Estado'};
 
