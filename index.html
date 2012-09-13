@@ -21,7 +21,7 @@
 				de forma a ser manipulado pelo AngularJS. 
 				- ng-model="estado" determina que a variavel estado no riaSelect.js receberá o valor selecionado no select.
 					Por outro lado, quando a variável for modificada no arquivo javascript, a alteração será refletida no select.
-				- ria-select é a diretiva que transforma o <select> no Select2. Necessita da inclusão do plugin. Ver no <header> deste documento. O valor passado para a diretiva (estados_config) está declarado no riaSelect.js e contém um objeto de configuração para o Select2. Este objeto será resgatado dentro da diretiva e utilizado.
+				- ria-select é a diretiva que transforma o <select> no Select2. Necessita da inclusão do plugin. Ver no <header> deste documento. O valor passado para a diretiva (estados_config) está declarado no riaSelect.js e contém um objeto de configuração para o Select2. Este objeto será resgatado dentro da diretiva e utilizado. O objeto é opcional!
 			-->
 			<select style="width:300px" ng-model="estado" ria-select="estados_config">
 				<option></option>
