@@ -1,9 +1,6 @@
 
-/* Cria-se um módulo a ser utilizado na declaração ng-app  */
-var rialabs = angular.module('rialabs', [])
-
 /* De forma encadeada, executa-se o método directive para criar a diretiva. */
-.directive('riaSelect', function(){ /* O uso no template será como atributo HTML: ria-select="{}" */
+rialabs.directive('riaSelect', function(){ /* O uso no template será como atributo HTML: ria-select="{}" */
 	/* http://docs.angularjs.org/guide/directive */
 	return {
 		restrict: 'A', /* Limita o uso a um atributo HTML */

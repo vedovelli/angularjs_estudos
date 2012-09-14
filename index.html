@@ -5,17 +5,26 @@
 		<meta charset="utf8">
 		<link rel="stylesheet" href="plugin/select2-2.1/select2.css">
 		<style type="text/css">
-
+			.slider_container{
+				border: #ccc 1px solid;
+				width: 800px;
+				height: 200px;
+			}
 		</style>
 		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.min.js"></script>
 		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
 		<script type="text/javascript" src="plugin/select2-2.1/select2.min.js"></script>
+		<script type="text/javascript" src="plugin/jquery.ssslider.js"></script>
+		<script type="text/javascript" src="module/rialabs.js"></script>
 		<script type="text/javascript" src="directive/riaSelect.js"></script>
+		<script type="text/javascript" src="directive/riaSSSlider.js"></script>
 	</head>
 	<body>
 
 		<div ng-controller="Ctrl"><!-- A partir daqui, o controller Ctrl cuidará do comportamento -->
 			
+			<h2>Select2</h2>
+
 			<!--
 				O select é um elemento HTML padrão, que recebe algumas diretivas para se comportar
 				de forma a ser manipulado pelo AngularJS. 
@@ -44,5 +53,19 @@
 			Cidade: {{cidade}}
 
 		</div><!-- Final do escopo de atuação do controller Ctrl -->
+		<hr>
+		<div ng-controller="CtrlSlider">
+			<h2>SSSlider</h2>
+			<div class="slider_container" ria-ssslider>
+				<div style="background-color:#ccc">1</div>
+				<div style="background-color:#ddd">2</div>
+				<div style="background-color:#eee">3</div>
+				<div style="background-color:#eee">4</div>
+			</div>
+			<p>{{panes_length}}</p>
+			<button ng-click="change_prev()">Prev</button>
+			<button ng-repeat="pos in panes_length" ng-click="navegar(pos)">Pane {{pos}}</button>
+			<button ng-click="change_next()">Next</button>
+		</div>
 	</body>
 </html>
