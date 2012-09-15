@@ -12,10 +12,12 @@ rialabs.directive('riaSelect', function(){ /* O uso no template será como atrib
 			
 			return function ($scope, $element, $attrs, ngModel){ /* De dentro da compile function, retorna-se a link function */
 				
-				el.select2($scope[$attrs.riaSelect] || {}); /* Caso o objeto de configuração do select2() tenha sido passado, aplica-se ao elemento */
+				var ng = $scope;
+
+				el.select2(ng[$attrs.riaSelect] || {}); /* Caso o objeto de configuração do select2() tenha sido passado, aplica-se ao elemento */
 				
 				el.on('change', function(){ /* Event listener no change do select2() */
-					$scope.$apply(function() { /* Executa a função anônima no escopo */
+					ng.$apply(function() { /* Executa a função anônima no escopo */
 						ngModel.$setViewValue(el.select2('val')); /* Seta o valor do model com o valor do select2() */
 					});
 				});

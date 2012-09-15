@@ -3,29 +3,30 @@ rialabs.directive('riaSsslider', function(){
 	return {
 		restrict: 'A',
 		link: function link ($scope, $element, $attrs){
-			var el = jQuery($element);
+			var el = jQuery($element),
+				ng = $scope;
 			
 			el.children().each(function(index, item){
-				$scope.panes_length.push($(item).data('label') || "");
+				ng.panes_length.push($(item).data('label') || "");
 			});
 			
-			$scope.$watch('position', function(newValue){
+			ng.$watch('position', function(newValue){
 				el.ssslider('navigate',newValue);
 			});
 
-			$scope.$watch('prev', function(newValue){
+			ng.$watch('prev', function(newValue){
 				if(newValue != undefined){
 					el.ssslider('prev');
 				}
 			});
 
-			$scope.$watch('next', function(newValue){
+			ng.$watch('next', function(newValue){
 				if(newValue != undefined){
 					el.ssslider('next');
 				}
 			});
 			
-			el.ssslider($scope.config || {});
+			el.ssslider(ng.config || {});
 		}
 	};
 })
