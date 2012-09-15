@@ -99,8 +99,9 @@
 
 		<div ng-controller="CtrlForm">
 			<form class="form-horizontal">
-				<div ria-formitem="nome_config"></div>
-				<div ria-formitem="email_config"></div>
+				<div ria-formitem="nome_config" ng-model="nome"></div>
+				<!-- <div ria-formitem="email_config"></div> -->
+				<button class="btn btn-large" ng-click="mudar()">Mudar label nome</button>
 			</form>
 		</div>
 
