@@ -50,7 +50,7 @@ rialabs.directive('riaSsslider', function(){
 		ng.position = 0;
 		ng.panes_length = [];
 		ng.config = {
-			orientation:'from_top'
+			orientation:'from_right'
 		};
 	}();
 
