@@ -1,37 +1,55 @@
 
-rialabs.directive('riaFormitem', function(){ 
-
-	var template = '';
-		template += '<div class="control-group">';
-		template += '<label class="control-label" for="{{config.id}}">{{config.label}}</label>';
-		template += '<div class="controls">';
-		template += '<input type="{{config.input_type}}" {{config.required}} id="{{config.id}}" placeholder="{{config.placeholder}}">';
-		template += '</div>';
-		template += '</div>';
+rialabs.directive('riaFormitem', function($compile){ 
 
 	return {
 		restrict: 'A',
-		template: template,
-		replace: true,
-		link: function ($scope, $element, $attrs){
-			
-			var ng = $scope, 
-				el = jQuery($element),
-				input = el.find('input');
+		require: 'ngModel',
+		compile: function(tElem, tAttrs){
 
-			ng.$watch($attrs.riaFormitem, function(newValue){
-				ng.config = newValue;
-				ng.$watch(ng.config.model, function(){
-					input.val(ng[ng.config.model]);
+			return function ($scope, $element, $attrs, $model){
+
+				var ng = $scope,
+					tEl, 
+					input;
+
+				
+				ng.$watch($attrs.riaFormitem, function(newValue){
+
+					if(newValue){
+
+						ng.config = newValue;
+
+						// falta validar a presença de propriedades obrigatorias
+						// do objeto de config
+
+						var template = '';
+							template += '<div class="control-group">';
+							template += '<label class="control-label" for="'+ng.config.id+'">'+ng.config.label+'</label>';
+							template += '<div class="controls">';
+							template += '<input ng-model="'+$attrs.ngModel+'" type="'+ng.config.input_type+'" '+ng.config.required+' id="'+ng.config.id+'" placeholder="'+ng.config.placeholder+'">';
+							template += '</div>';
+							template += '</div>';
+						
+						var compiled_template = $compile(template)($scope);
+
+						$element.replaceWith(compiled_template);
+						input = $(compiled_template.find('input'));
+
+						input.on('keyup', function(){
+							$model.$setViewValue(input.val());
+						});
+
+						ng.$watch(ng.config.model, function(){
+							input.val($model.$viewValue);
+						});
+
+					} else {
+						$.error('O objeto de configuração é obrigatório!');
+					}
+
 				});
-			});
 
-			input.on('keyup', function(){
-				// $model.$setViewValue(input.val());
-				ng[ng.config.model] = input.val();
-				console.log(ng[ng.config.model], 'input keyup event');
-			});
-
+			}
 		}
 	};
 
@@ -41,31 +59,31 @@ rialabs.directive('riaFormitem', function(){
 	
 	var ng = $scope; 
 
-	ng.mudar = function(){
-		console.log('mudar()', ng.nome);
+	ng.submit = function(){
+		console.log(JSON.stringify({nome: ng.nome, email: ng.email}));
 	};
 
 	var init = function(){ /* Tudo o que é executado quando o script é carregado. */
 		
-		ng.nome = 'ana paula';
+		ng.nome = 'Fábio Augusto da Silva Vedovelli';
+		ng.email = 'vedovelli@gmail.com';
 
 		ng.nome_config = {
 			id: 'txtNome',
 			label: 'Seu nome',
 			input_type: 'text',
 			placeholder: 'informe seu nome completo...',
-			model: 'nome',
 			required: 'required'
 		};
 
 		ng.email_config = {
 			id: 'txtEmail',
 			label: 'Seu e-mail',
-			input_type: 'email',
+			input_type: 'text',
 			placeholder: 'informe um e-mail válido...',
-			model: 'email',
 			required: ''
 		};
+
 	}();
 
 });
