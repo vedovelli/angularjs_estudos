@@ -5,8 +5,8 @@ rialabs.directive('riaSsslider', function(){
 		link: function link ($scope, $element, $attrs){
 			var el = jQuery($element);
 			
-			el.children().each(function(index){
-				$scope.panes_length.push(index);
+			el.children().each(function(index, item){
+				$scope.panes_length.push($(item).data('label') || "");
 			});
 			
 			$scope.$watch('position', function(newValue){
