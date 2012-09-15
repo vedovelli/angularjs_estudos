@@ -13,15 +13,19 @@ rialabs.directive('riaSsslider', function(){
 				el.ssslider('navigate',newValue);
 			});
 
-			$scope.$watch('prev', function(){
-				el.ssslider('prev');
+			$scope.$watch('prev', function(newValue){
+				if(newValue != undefined){
+					el.ssslider('prev');
+				}
 			});
 
-			$scope.$watch('next', function(){
-				el.ssslider('next');
+			$scope.$watch('next', function(newValue){
+				if(newValue != undefined){
+					el.ssslider('next');
+				}
 			});
 			
-			el.ssslider();
+			el.ssslider($scope.config || {});
 		}
 	};
 })
@@ -45,6 +49,9 @@ rialabs.directive('riaSsslider', function(){
 	var init = function(){ /* Tudo o que é executado quando o script é carregado. */
 		ng.position = 0;
 		ng.panes_length = [];
+		ng.config = {
+			orientation:'from_top'
+		};
 	}();
 
 });
