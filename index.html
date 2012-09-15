@@ -3,8 +3,13 @@
 	<head>
 		<title>Angular Directive</title>
 		<meta charset="utf8">
+		<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
 		<link rel="stylesheet" href="plugin/select2-2.1/select2.css">
 		<style type="text/css">
+			#main{
+				padding: 20px;
+			}
+
 			.slider_container{
 				border: #ccc 1px solid;
 				width: 800px;
@@ -21,52 +26,60 @@
 	</head>
 	<body>
 
-		<div ng-controller="Ctrl"><!-- A partir daqui, o controller Ctrl cuidará do comportamento -->
+		<div id="main">
+
+			<div ng-controller="Ctrl"><!-- A partir daqui, o controller Ctrl cuidará do comportamento -->
+				
+				<h2>Select2</h2>
+
+				<!--
+					O select é um elemento HTML padrão, que recebe algumas diretivas para se comportar
+					de forma a ser manipulado pelo AngularJS. 
+					- ng-model="estado" determina que a variavel estado no riaSelect.js receberá o valor selecionado no select.
+						Por outro lado, quando a variável for modificada no arquivo javascript, a alteração será refletida no select.
+					- ria-select é a diretiva que transforma o <select> no Select2. Necessita da inclusão do plugin. Ver no <header> deste documento. O valor passado para a diretiva (estados_config) está declarado no riaSelect.js e contém um objeto de configuração para o Select2. Este objeto será resgatado dentro da diretiva e utilizado. O objeto é opcional!
+				-->
+				<select style="width:300px" ng-model="estado" ria-select="estados_config">
+					<option></option>
+					<option ng-repeat="estado in estados" value="{{estado.value}}" ng-cloak>{{estado.name}}</option>
+				</select>
+				<br>
+				<select style="width:300px" ng-model="cidade" ria-select="cidades_config">
+					<option></option>
+					<option ng-repeat="cidade in cidades" value="{{cidade.value}}" ng-cloak>{{cidade.name}}</option>
+				</select>
+				<br>
+				<button class="left" ng-click="salvar()">Salvar</button>
+				<button class="left" ng-click="load()">Carregar Info</button>
+				<button class="left" ng-click="reset()">Reset</button>
+				<br>
+				Estado: {{estado}}
+				<br>
+				Cidade: {{cidade}}
+
+			</div><!-- Final do escopo de atuação do controller Ctrl -->
 			
-			<h2>Select2</h2>
 
-			<!--
-				O select é um elemento HTML padrão, que recebe algumas diretivas para se comportar
-				de forma a ser manipulado pelo AngularJS. 
-				- ng-model="estado" determina que a variavel estado no riaSelect.js receberá o valor selecionado no select.
-					Por outro lado, quando a variável for modificada no arquivo javascript, a alteração será refletida no select.
-				- ria-select é a diretiva que transforma o <select> no Select2. Necessita da inclusão do plugin. Ver no <header> deste documento. O valor passado para a diretiva (estados_config) está declarado no riaSelect.js e contém um objeto de configuração para o Select2. Este objeto será resgatado dentro da diretiva e utilizado. O objeto é opcional!
-			-->
-			<select style="width:300px" ng-model="estado" ria-select="estados_config">
-				<option></option>
-				<option ng-repeat="estado in estados" value="{{estado.value}}" ng-cloak>{{estado.name}}</option>
-			</select>
-			<br>
-			<select style="width:300px" ng-model="cidade" ria-select="cidades_config">
-				<option></option>
-				<option ng-repeat="cidade in cidades" value="{{cidade.value}}" ng-cloak>{{cidade.name}}</option>
-			</select>
-			<br>
-			<button ng-click="salvar()">Salvar</button>
-			<br>
-			<button ng-click="load()">Carregar</button>
-			<br>
-			<button ng-click="reset()">Reset</button>
-			<br>
-			Estado: {{estado}}
-			<br>
-			Cidade: {{cidade}}
 
-		</div><!-- Final do escopo de atuação do controller Ctrl -->
-		<hr>
-		<div ng-controller="CtrlSlider">
-			<h2>SSSlider</h2>
-			<div class="slider_container" ria-ssslider>
-				<div style="background-color:#ccc">1</div>
-				<div style="background-color:#ddd">2</div>
-				<div style="background-color:#eee">3</div>
-				<div style="background-color:#f4f4f4">4</div>
+			<hr>
+
+
+
+			<!-- Super Simple Slider como diretiva -->
+			<div ng-controller="CtrlSlider">
+				<h2>SSSlider</h2>
+				<div class="slider_container" ria-ssslider>
+					<div style="background-color:#ccc">1</div>
+					<div style="background-color:#ddd">2</div>
+					<div style="background-color:#eee">3</div>
+					<div style="background-color:#f4f4f4">4</div>
+				</div>
+				<button ng-click="change_prev()">Prev</button>
+				<button ng-repeat="pos in panes_length" ng-click="navegar(pos)">Pane {{pos+1}}</button>
+				<button ng-click="change_next()">Next</button>
 			</div>
-			<button ng-click="change_prev()">Prev</button>
-			<button ng-repeat="pos in panes_length" ng-click="navegar(pos)">Pane {{pos+1}}</button>
-			<button ng-click="change_next()">Next</button>
+			<hr>
+			<a href="https://github.com/vedovelli/angularjs_estudos">Código fonte no GitHub</a>
 		</div>
-		<hr>
-		<a href="https://github.com/vedovelli/angularjs_estudos">Código fonte no GitHub</a>
 	</body>
 </html>
