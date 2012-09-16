@@ -39,7 +39,7 @@ rialabs.directive('riaSelect', function(){ /* O uso no template será como atrib
 	var ng = $scope; /* Atalhos para evitar ficar digitando $scope todo o tempo */
 
 	ng.salvar = function(){ /* Alerta com o valor dos dois models. Este seria o momento de enviar a info para o server. */
-		alert(JSON.stringify({cidade: ng.cidade, estado: ng.estado}));
+		ng.result = JSON.stringify({cidade: ng.cidade, estado: ng.estado});
 	};
 
 	ng.load = function(){ /* Simula o carregamento de informações nos selects após uma consulta no DB, por ex. */

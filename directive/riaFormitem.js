@@ -19,9 +19,6 @@ rialabs.directive('riaFormitem', function($compile){
 
 						ng.config = newValue;
 
-						// falta validar a presença de propriedades obrigatorias
-						// do objeto de config
-
 						var template = '';
 							template += '<div class="control-group">';
 							template += '<label class="control-label" for="'+ng.config.id+'">'+ng.config.label+'</label>';
@@ -31,7 +28,6 @@ rialabs.directive('riaFormitem', function($compile){
 							template += '</div>';
 						
 						var compiled_template = $compile(template)($scope);
-
 						$element.replaceWith(compiled_template);
 						input = $(compiled_template.find('input'));
 
@@ -40,6 +36,7 @@ rialabs.directive('riaFormitem', function($compile){
 						});
 
 						ng.$watch(ng.config.model, function(){
+							console.log($model.$viewValue);
 							input.val($model.$viewValue);
 						});
 
@@ -48,7 +45,6 @@ rialabs.directive('riaFormitem', function($compile){
 					}
 
 				});
-
 			}
 		}
 	};
@@ -59,8 +55,12 @@ rialabs.directive('riaFormitem', function($compile){
 	
 	var ng = $scope; 
 
+	var result = function(){
+		ng.result = JSON.stringify({nome: ng.nome, email: ng.email});
+	};
+
 	ng.submit = function(){
-		console.log(JSON.stringify({nome: ng.nome, email: ng.email}));
+		result();
 	};
 
 	var init = function(){ /* Tudo o que é executado quando o script é carregado. */
@@ -83,6 +83,8 @@ rialabs.directive('riaFormitem', function($compile){
 			placeholder: 'informe um e-mail válido...',
 			required: ''
 		};
+
+		result();
 
 	}();
 
