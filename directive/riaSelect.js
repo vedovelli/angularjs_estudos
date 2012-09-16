@@ -10,7 +10,7 @@ rialabs.directive('riaSelect', function(){ /* O uso no template será como atrib
 			var el = jQuery(tElement); /* O elemento recebido no construtor é um <select>, que com o uso da jQuery, será transformado em select2() */
 				el.select2(); /* Aplica ao objeto jQuery o plugin select2() */
 			
-			return function ($scope, $element, $attrs, ngModel){ /* De dentro da compile function, retorna-se a link function */
+			return function ($scope, $element, $attrs, $model){ /* De dentro da compile function, retorna-se a link function */
 				
 				var ng = $scope;
 
@@ -18,16 +18,16 @@ rialabs.directive('riaSelect', function(){ /* O uso no template será como atrib
 				
 				el.on('change', function(){ /* Event listener no change do select2() */
 					ng.$apply(function() { /* Executa a função anônima no escopo */
-						ngModel.$setViewValue(el.select2('val')); /* Seta o valor do model com o valor do select2() */
+						$model.$setViewValue(el.select2('val')); /* Seta o valor do model com o valor do select2() */
 					});
 				});
 
-				ngModel.$render = function() { /* O método render aplica o valor do model à view */
-					el.select2('val', ngModel.$viewValue); /* Aplica o valor atual do model à view. Ação específica do plugin select2() */
+				$model.$render = function() { /* O método render aplica o valor do model à view */
+					el.select2('val', $model.$viewValue); /* Aplica o valor atual do model à view. Ação específica do plugin select2() */
 				};
 
 				setTimeout(function () { /* setTimeout como espécie de callLater, para o caso do model ja vir carregado */
-					el.select2('val', ngModel.$viewValue);  /* Aplica o valor atual do model à view. Ação específica do plugin select2() */
+					el.select2('val', $model.$viewValue);  /* Aplica o valor atual do model à view. Ação específica do plugin select2() */
 				});
 			}		
 		}
