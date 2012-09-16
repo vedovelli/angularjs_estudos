@@ -102,8 +102,8 @@
 				<form class="form-horizontal">
 					<div ria-formitem="nome_config" ng-model="nome"></div>
 					<div ria-formitem="email_config" ng-model="email"></div>
-					<button class="btn btn-large" ng-click="nome='Ana Paula'">Trocar valor de Nome</button>
-					<button class="btn btn-large" ng-click="email='123@gmail.com'">Trocar valor de E-mail</button>
+					<button class="btn btn-large" ng-click="trocar('nome','Ana Paula')">Trocar valor de Nome</button>
+					<button class="btn btn-large" ng-click="trocar('email', '123@gmail.com')">Trocar valor de E-mail</button>
 					<button class="btn btn-large" ng-click="submit()">Enviar</button>
 					<p><code>{{result}} - JSON pronto para enviar ao server</code></p>
 				</form>

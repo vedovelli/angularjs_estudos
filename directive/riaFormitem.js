@@ -35,9 +35,9 @@ rialabs.directive('riaFormitem', function($compile){
 							$model.$setViewValue(input.val());
 						});
 
-						ng.$watch(ng.config.model, function(){
-							console.log($model.$viewValue);
+						ng.$watch($attrs.ngModel, function(){
 							input.val($model.$viewValue);
+							ng.$emit('model_changed', {person:'vedovelli',age:'37'});
 						});
 
 					} else {
@@ -53,14 +53,20 @@ rialabs.directive('riaFormitem', function($compile){
 
 .controller('CtrlForm', function($scope){ 
 	
-	var ng = $scope; 
+	var ng = $scope;
 
-	var result = function(){
+	ng.$on('model_changed', function(ev, args){
+		console.log(args);
 		ng.result = JSON.stringify({nome: ng.nome, email: ng.email});
-	};
+	}); 
 
 	ng.submit = function(){
-		result();
+		ng.nome = '';
+		ng.email = '';
+	};
+
+	ng.trocar = function(model, valor){
+		ng[model] = valor;
 	};
 
 	var init = function(){ /* Tudo o que é executado quando o script é carregado. */
@@ -83,8 +89,6 @@ rialabs.directive('riaFormitem', function($compile){
 			placeholder: 'informe um e-mail válido...',
 			required: ''
 		};
-
-		result();
 
 	}();
 
