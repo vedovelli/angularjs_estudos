@@ -56,7 +56,7 @@ rialabs.directive('riaFormitem', function($compile){
 	var ng = $scope;
 
 	ng.$on('model_changed', function(ev, args){
-		console.log(args);
+		// console.log(args);
 		ng.result = JSON.stringify({nome: ng.nome, email: ng.email});
 	}); 
 
