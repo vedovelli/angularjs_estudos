@@ -8,11 +8,8 @@ rialabs.directive('riaFormitem', function($compile){
 
 			return function ($scope, $element, $attrs, $model){
 
-				var ng = $scope,
-					tEl, 
-					input;
+				var ng = $scope;
 
-				
 				ng.$watch($attrs.riaFormitem, function(newValue){
 
 					if(newValue){
@@ -27,23 +24,17 @@ rialabs.directive('riaFormitem', function($compile){
 							template += '</div>';
 							template += '</div>';
 						
-						var compiled_template = $compile(template)($scope);
-						$element.replaceWith(compiled_template);
-						input = $(compiled_template.find('input'));
+						$element.replaceWith($compile(template)($scope));
 
-						input.on('keyup', function(){
-							$model.$setViewValue(input.val());
-						});
-
-						ng.$watch($attrs.ngModel, function(){
-							input.val($model.$viewValue);
-							ng.$emit('model_changed', {person:'vedovelli',age:'37'});
-						});
 
 					} else {
 						$.error('O objeto de configuração é obrigatório!');
 					}
 
+				});
+				
+				ng.$watch($attrs.ngModel, function(){
+					ng.$emit('model_changed', {person:'vedovelli',age:'37'});
 				});
 			}
 		}
@@ -55,11 +46,6 @@ rialabs.directive('riaFormitem', function($compile){
 	
 	var ng = $scope;
 
-	ng.$on('model_changed', function(ev, args){
-		// console.log(args);
-		ng.result = JSON.stringify({nome: ng.nome, email: ng.email});
-	}); 
-
 	ng.submit = function(){
 		ng.nome = '';
 		ng.email = '';
@@ -67,6 +53,10 @@ rialabs.directive('riaFormitem', function($compile){
 
 	ng.trocar = function(model, valor){
 		ng[model] = valor;
+	};
+
+	ng.result = function(){
+		ng.result = JSON.stringify({nome: ng.nome, email: ng.email});
 	};
 
 	var init = function(){ /* Tudo o que é executado quando o script é carregado. */
@@ -89,6 +79,10 @@ rialabs.directive('riaFormitem', function($compile){
 			placeholder: 'informe um e-mail válido...',
 			required: ''
 		};
+
+		ng.$on('model_changed', function(ev, args){
+			ng.result = JSON.stringify({nome: ng.nome, email: ng.email});
+		});
 
 	}();
 
