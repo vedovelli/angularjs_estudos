@@ -1,0 +1,77 @@
+<!doctype html>
+<!-- determina que o documento todo estará a disposição do AngularJS como template -->
+<html ng-app="rialabs"> 
+	<head>
+
+		<title>Angular Directive - Slider</title>
+		<meta charset="utf8">
+		<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+		<style type="text/css">
+			body{
+				background-color: #ddd;
+			}
+
+			#main{
+				padding: 20px;
+			}
+
+			.slider_container{
+				border: #999 1px solid;
+				width: 800px;
+				height: 200px;
+				margin-bottom: 10px;
+			}
+		</style>
+		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.min.js"></script>
+		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
+		<script type="text/javascript" src="plugin/jquery.ssslider.js"></script>
+		<script type="text/javascript" src="module/rialabs.js"></script>
+		<script type="text/javascript" src="directive/riaSSSlider.js"></script>
+	</head>
+	<body>
+		
+		<div class="navbar">
+			<div class="navbar-inner">
+				<a class="brand" href="#">Diretivas AngularJS - Vedovelli</a>
+				<ul class="nav">
+					<li><a href="/select.html">Select</a></li>
+					<li class="active"><a href="/slider.html">Slider</a></li>
+					<li><a href="/form_item.html">Form Item</a></li>
+				</ul>
+			</div>
+		</div>
+		<div id="main">
+
+			<h2>Projeto - Código fonte</h2>
+			<a href="https://github.com/vedovelli/angularjs_estudos">Código fonte no GitHub</a>
+			<hr>
+
+			<!-- Super Simple Slider como diretiva -->
+			<div ng-controller="CtrlSlider">
+				
+				<h2>SSSlider</h2>
+				<p><a href="https://github.com/vedovelli/jquery.ssslider">Plugin no GitHub</a></p>
+				
+				<div class="slider_container" ria-ssslider>
+					<div data-label="Atendimento" style="background-color:#bbb"><h3>Atendimento</h3></div>
+					<div data-label="Financeiro" style="background-color:#ccc"><h3>Financeiro</h3></div>
+					<div data-label="Produção" style="background-color:#ddd"><h3>Produção</h3></div>
+					<div data-label="Compras" style="background-color:#eee"><h3>Compras</h3></div>
+				</div>
+				
+				<button class="btn btn-large" ng-click="change_prev()">Prev</button>
+				
+				<button class="btn btn-large" ng-repeat="label in panes_length" ng-click="navegar($index)">{{label}}</button>
+				
+				<button class="btn btn-large" ng-click="change_next()">Next</button>
+
+			</div>
+
+		</div>
+
+		<script src="//static.getclicky.com/js" type="text/javascript"></script>
+		<script type="text/javascript">try{ clicky.init(5254); }catch(e){}</script>
+
+	</body>
+
+</html>

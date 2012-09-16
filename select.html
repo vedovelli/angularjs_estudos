@@ -1,0 +1,84 @@
+<!doctype html>
+<html ng-app="rialabs"> <!-- determina que o documento todo estará a disposição do AngularJS como template -->
+	<head>
+		<title>Angular Directive - Select</title>
+		<meta charset="utf8">
+		<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" href="plugin/select2-2.1/select2.css">
+		<style type="text/css">
+			
+			body{
+				background-color: #ddd;
+			}
+
+			#main{
+				padding: 20px;
+			}
+
+		</style>
+		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.min.js"></script>
+		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
+		<script type="text/javascript" src="plugin/select2-2.1/select2.min.js"></script>
+		<script type="text/javascript" src="module/rialabs.js"></script>
+		<script type="text/javascript" src="directive/riaSelect.js"></script>
+	</head>
+	<body>
+
+		<div class="navbar">
+			<div class="navbar-inner">
+				<a class="brand" href="#">Diretivas AngularJS - Vedovelli</a>
+				<ul class="nav">
+					<li class="active"><a href="/select.html">Select</a></li>
+					<li><a href="/slider.html">Slider</a></li>
+					<li><a href="/form_item.html">Form Item</a></li>
+				</ul>
+			</div>
+		</div>
+
+		<div id="main">
+
+			<h2>Projeto - Código fonte</h2>
+			<a href="https://github.com/vedovelli/angularjs_estudos">Código fonte no GitHub</a>
+			<hr>
+
+			<div ng-controller="Ctrl"><!-- A partir daqui, o controller Ctrl cuidará do comportamento -->
+				
+				<h2>Select2</h2>
+				<p><a href="http://ivaynberg.github.com/select2/">Site do Plugin</a></p>
+
+				<!--
+					O select é um elemento HTML padrão, que recebe algumas diretivas para se comportar
+					de forma a ser manipulado pelo AngularJS. 
+					- ng-model="estado" determina que a variavel estado no riaSelect.js receberá o valor selecionado no select.
+						Por outro lado, quando a variável for modificada no arquivo javascript, a alteração será refletida no select.
+					- ria-select é a diretiva que transforma o <select> no Select2. Necessita da inclusão do plugin. Ver no <header> deste documento. O valor passado para a diretiva (estados_config) está declarado no riaSelect.js e contém um objeto de configuração para o Select2. Este objeto será resgatado dentro da diretiva e utilizado. O objeto é opcional!
+				-->
+				<select style="width:300px" ng-model="estado" ria-select="estados_config">
+					<option></option>
+					<option ng-repeat="estado in estados" value="{{estado.value}}" ng-cloak>{{estado.name}}</option>
+				</select>
+				<br>
+				<select style="width:300px" ng-model="cidade" ria-select="cidades_config">
+					<option></option>
+					<option ng-repeat="cidade in cidades" value="{{cidade.value}}" ng-cloak>{{cidade.name}}</option>
+				</select>
+				<br>
+				<button class="btn btn-large" ng-click="salvar()">Salvar</button>
+				<button class="btn btn-large" ng-click="load()">Carregar Info</button>
+				<button class="btn btn-large" ng-click="reset()">Reset</button>
+				<br>
+				Estado: {{estado}}
+				<br>
+				Cidade: {{cidade}}
+				<br>
+				<code ng-show="result">{{result}} - JSON pronto para enviar ao server</code>
+
+			</div><!-- Final do escopo de atuação do controller Ctrl -->
+
+		</div>
+
+		<script src="//static.getclicky.com/js" type="text/javascript"></script>
+		<script type="text/javascript">try{ clicky.init(5254); }catch(e){}</script>
+
+	</body>
+</html>

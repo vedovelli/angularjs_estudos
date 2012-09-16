@@ -1,10 +1,9 @@
 <!doctype html>
-<html ng-app="rialabs"> <!-- determina que o documento todo estará a disposição do AngularJS como template -->
+<html>
 	<head>
-		<title>Angular Directive</title>
+		<title>Angular Directives</title>
 		<meta charset="utf8">
 		<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
-		<link rel="stylesheet" href="plugin/select2-2.1/select2.css">
 		<style type="text/css">
 			
 			body{
@@ -15,102 +14,30 @@
 				padding: 20px;
 			}
 
-			.slider_container{
-				border: #999 1px solid;
-				width: 800px;
-				height: 200px;
-				margin-bottom: 10px;
-			}
 		</style>
-		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.min.js"></script>
 		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
-		<script type="text/javascript" src="plugin/select2-2.1/select2.min.js"></script>
-		<script type="text/javascript" src="plugin/jquery.ssslider.js"></script>
-		<script type="text/javascript" src="module/rialabs.js"></script>
-		<script type="text/javascript" src="directive/riaSelect.js"></script>
-		<script type="text/javascript" src="directive/riaSSSlider.js"></script>
-		<script type="text/javascript" src="directive/riaFormitem.js"></script>
+		<script type="text/javascript" src="bootstrap/js/bootstrap.js"></script>
 	</head>
 	<body>
-		
+
+		<div class="navbar">
+			<div class="navbar-inner">
+				<a class="brand" href="#">Diretivas AngularJS - Vedovelli</a>
+				<ul class="nav">
+					<li><a href="/select.html">Select</a></li>
+					<li><a href="/slider.html">Slider</a></li>
+					<li><a href="/form_item.html">Form Item</a></li>
+				</ul>
+			</div>
+		</div>
 
 		<div id="main">
 
 			<h2>Projeto - Código fonte</h2>
 			<a href="https://github.com/vedovelli/angularjs_estudos">Código fonte no GitHub</a>
-			<hr>
 
-			<div ng-controller="Ctrl"><!-- A partir daqui, o controller Ctrl cuidará do comportamento -->
-				
-				<h2>Select2</h2>
-				<p><a href="http://ivaynberg.github.com/select2/">Site do Plugin</a></p>
-
-				<!--
-					O select é um elemento HTML padrão, que recebe algumas diretivas para se comportar
-					de forma a ser manipulado pelo AngularJS. 
-					- ng-model="estado" determina que a variavel estado no riaSelect.js receberá o valor selecionado no select.
-						Por outro lado, quando a variável for modificada no arquivo javascript, a alteração será refletida no select.
-					- ria-select é a diretiva que transforma o <select> no Select2. Necessita da inclusão do plugin. Ver no <header> deste documento. O valor passado para a diretiva (estados_config) está declarado no riaSelect.js e contém um objeto de configuração para o Select2. Este objeto será resgatado dentro da diretiva e utilizado. O objeto é opcional!
-				-->
-				<select style="width:300px" ng-model="estado" ria-select="estados_config">
-					<option></option>
-					<option ng-repeat="estado in estados" value="{{estado.value}}" ng-cloak>{{estado.name}}</option>
-				</select>
-				<br>
-				<select style="width:300px" ng-model="cidade" ria-select="cidades_config">
-					<option></option>
-					<option ng-repeat="cidade in cidades" value="{{cidade.value}}" ng-cloak>{{cidade.name}}</option>
-				</select>
-				<br>
-				<button class="btn btn-large" ng-click="salvar()">Salvar</button>
-				<button class="btn btn-large" ng-click="load()">Carregar Info</button>
-				<button class="btn btn-large" ng-click="reset()">Reset</button>
-				<br>
-				Estado: {{estado}}
-				<br>
-				Cidade: {{cidade}}
-				<br>
-				<code ng-show="result">{{result}} - JSON pronto para enviar ao server</code>
-
-			</div><!-- Final do escopo de atuação do controller Ctrl -->
-
-			<hr>
-
-			<!-- Super Simple Slider como diretiva -->
-			<div ng-controller="CtrlSlider">
-				
-				<h2>SSSlider</h2>
-				<p><a href="https://github.com/vedovelli/jquery.ssslider">Plugin no GitHub</a></p>
-				
-				<div class="slider_container" ria-ssslider>
-					<div data-label="Atendimento" style="background-color:#bbb"><h3>Atendimento</h3></div>
-					<div data-label="Financeiro" style="background-color:#ccc"><h3>Financeiro</h3></div>
-					<div data-label="Produção" style="background-color:#ddd"><h3>Produção</h3></div>
-					<div data-label="Compras" style="background-color:#eee"><h3>Compras</h3></div>
-				</div>
-				
-				<button class="btn btn-large" ng-click="change_prev()">Prev</button>
-				
-				<button class="btn btn-large" ng-repeat="label in panes_length" ng-click="navegar($index)">{{label}}</button>
-				
-				<button class="btn btn-large" ng-click="change_next()">Next</button>
-
-			</div>
-			<hr>
-			<div ng-controller="CtrlForm">
-				<h2>Item de formulário horizontal do Twitter Bootstrap</h2>
-				<form class="form-horizontal">
-					<div ria-formitem="nome_config" ng-model="nome"></div>
-					<div ria-formitem="email_config" ng-model="email"></div>
-					<button class="btn btn-large" ng-click="trocar('nome','Ana Paula')">Trocar valor de Nome</button>
-					<button class="btn btn-large" ng-click="trocar('email', '123@gmail.com')">Trocar valor de E-mail</button>
-					<button class="btn btn-large" ng-click="submit()">Enviar</button>
-					<p><code>{{result}} - JSON pronto para enviar ao server</code></p>
-				</form>
-			</div>
 		</div>
-
-
+		
 		<script src="//static.getclicky.com/js" type="text/javascript"></script>
 		<script type="text/javascript">try{ clicky.init(5254); }catch(e){}</script>
 

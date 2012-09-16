@@ -1,0 +1,59 @@
+<!doctype html>
+<html ng-app="rialabs"> <!-- determina que o documento todo estará a disposição do AngularJS como template -->
+	<head>
+		<title>Angular Directive - Form Item</title>
+		<meta charset="utf8">
+		<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+		<style type="text/css">
+			
+			body{
+				background-color: #ddd;
+			}
+
+			#main{
+				padding: 20px;
+			}
+
+		</style>
+		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.min.js"></script>
+		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
+		<script type="text/javascript" src="module/rialabs.js"></script>
+		<script type="text/javascript" src="directive/riaFormitem.js"></script>
+	</head>
+	<body>
+		
+		<div class="navbar">
+			<div class="navbar-inner">
+				<a class="brand" href="/">Diretivas AngularJS - Vedovelli</a>
+				<ul class="nav">
+					<li><a href="/select.html">Select</a></li>
+					<li><a href="/slider.html">Slider</a></li>
+					<li class="active"><a href="/form_item.html">Form Item</a></li>
+				</ul>
+			</div>
+		</div>
+
+		<div id="main">
+
+			<h2>Projeto - Código fonte</h2>
+			<a href="https://github.com/vedovelli/angularjs_estudos">Código fonte no GitHub</a>
+			<hr>
+
+			<div ng-controller="CtrlForm">
+				<h2>Item de formulário horizontal do Twitter Bootstrap</h2>
+				<form class="form-horizontal">
+					<div ria-formitem="nome_config" ng-model="nome"></div>
+					<div ria-formitem="email_config" ng-model="email"></div>
+					<button class="btn btn-large" ng-click="trocar('nome','Ana Paula')">Trocar valor de Nome</button>
+					<button class="btn btn-large" ng-click="trocar('email', '123@gmail.com')">Trocar valor de E-mail</button>
+					<button class="btn btn-large" ng-click="submit()">Enviar</button>
+					<p><code>{{result}} - JSON pronto para enviar ao server</code></p>
+				</form>
+			</div>
+		</div>
+
+		<script src="//static.getclicky.com/js" type="text/javascript"></script>
+		<script type="text/javascript">try{ clicky.init(5254); }catch(e){}</script>
+
+	</body>
+</html>
