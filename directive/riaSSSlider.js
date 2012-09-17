@@ -35,7 +35,7 @@ rialabs.directive('riaSsslider', function(){
 	
 	var ng = $scope; 
 
-	ng.navegar = function(pos){
+	ng.navigate = function(pos){
 		ng.position = pos;
 	};
 
@@ -47,7 +47,7 @@ rialabs.directive('riaSsslider', function(){
 		ng.next = !ng.next || false;
 	};
 
-	var init = function(){ /* Tudo o que é executado quando o script é carregado. */
+	var init = function(){ 
 		ng.position = 0;
 		ng.panes_length = [];
 		ng.config = {

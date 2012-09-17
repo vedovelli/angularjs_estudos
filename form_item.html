@@ -1,6 +1,5 @@
 <!doctype html>
 <html ng-app="rialabs"> 
-<!-- determina que o documento todo estará a disposição do AngularJS como template -->
 	<head>
 		<title>Angular Directive - Form Item</title>
 		<meta charset="utf8">
@@ -40,14 +39,18 @@
 			<hr>
 
 			<div ng-controller="CtrlForm">
-				<h2>Item de formulário horizontal do Twitter Bootstrap</h2>
+				<h2>Twitter Bootstrap horizontal form item</h2>
+				
 				<form class="form-horizontal">
-					<div ria-formitem="nome_config" ng-model="nome"></div>
+					
+					<!-- Directive applied as an attribute with a value, that is the config object declared in the controller -->
+					<div ria-formitem="name_config" ng-model="name"></div>
 					<div ria-formitem="email_config" ng-model="email"></div>
-					<button class="btn btn-large" ng-click="trocar('nome','Ana Paula')">Trocar valor de Nome</button>
-					<button class="btn btn-large" ng-click="trocar('email', '123@gmail.com')">Trocar valor de E-mail</button>
-					<button class="btn btn-large" ng-click="submit()">Enviar</button>
-					<p><code>{{result}} - JSON pronto para enviar ao server</code></p>
+					
+					<button class="btn btn-large" ng-click="change('name','Maggie')">Change 'name' value</button>
+					<button class="btn btn-large" ng-click="change('email', '123@gmail.com')">Change 'e-mail' value</button>
+					<button class="btn btn-large" ng-click="submit()">Send</button>
+					<p><code>{{result}} - JSON ready to be sent to the server</code></p>
 				</form>
 			</div>
 		</div>

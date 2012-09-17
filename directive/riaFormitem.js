@@ -28,13 +28,13 @@ rialabs.directive('riaFormitem', function($compile){
 
 
 					} else {
-						$.error('O objeto de configuração é obrigatório!');
+						$.error('Config object is mandatory!');
 					}
 
 				});
 				
 				ng.$watch($attrs.ngModel, function(){
-					ng.$emit('model_changed', {person:'vedovelli',age:'37'});
+					ng.$emit('model_changed', {person:'Mark',age:'37'});
 				});
 			}
 		}
@@ -47,41 +47,41 @@ rialabs.directive('riaFormitem', function($compile){
 	var ng = $scope;
 
 	ng.submit = function(){
-		ng.nome = '';
+		ng.name = '';
 		ng.email = '';
 	};
 
-	ng.trocar = function(model, valor){
-		ng[model] = valor;
+	ng.change = function(model, value){
+		ng[model] = value;
 	};
 
 	ng.result = function(){
-		ng.result = JSON.stringify({nome: ng.nome, email: ng.email});
+		ng.result = JSON.stringify({nome: ng.name, email: ng.email});
 	};
 
 	var init = function(){ /* Tudo o que é executado quando o script é carregado. */
 		
-		ng.nome = 'Fábio Augusto da Silva Vedovelli';
-		ng.email = 'vedovelli@gmail.com';
+		ng.name = 'Mark Pilgrim';
+		ng.email = 'mp@gmail.com';
 
-		ng.nome_config = {
+		ng.name_config = {
 			id: 'txtNome',
-			label: 'Seu nome',
+			label: 'Your name',
 			input_type: 'text',
-			placeholder: 'informe seu nome completo...',
+			placeholder: 'full name please...',
 			required: 'required'
 		};
 
 		ng.email_config = {
 			id: 'txtEmail',
-			label: 'Seu e-mail',
+			label: 'Your e-mail',
 			input_type: 'text',
-			placeholder: 'informe um e-mail válido...',
+			placeholder: 'valid e-mail address...',
 			required: ''
 		};
 
 		ng.$on('model_changed', function(ev, args){
-			ng.result = JSON.stringify({nome: ng.nome, email: ng.email});
+			ng.result = JSON.stringify({name: ng.name, email: ng.email});
 		});
 
 	}();
