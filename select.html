@@ -1,5 +1,6 @@
 <!doctype html>
-<html ng-app="rialabs"> <!-- determina que o documento todo estará a disposição do AngularJS como template -->
+<html ng-app="rialabs">
+
 	<head>
 		<title>Angular Directive - Select</title>
 		<meta charset="utf8">
@@ -45,32 +46,29 @@
 				<h2>Select2</h2>
 				<p><a href="http://ivaynberg.github.com/select2/">Site do Plugin</a></p>
 
-				<!--
-					O select é um elemento HTML padrão, que recebe algumas diretivas para se comportar
-					de forma a ser manipulado pelo AngularJS. 
-					- ng-model="estado" determina que a variavel estado no riaSelect.js receberá o valor selecionado no select.
-						Por outro lado, quando a variável for modificada no arquivo javascript, a alteração será refletida no select.
-					- ria-select é a diretiva que transforma o <select> no Select2. Necessita da inclusão do plugin. Ver no <header> deste documento. O valor passado para a diretiva (estados_config) está declarado no riaSelect.js e contém um objeto de configuração para o Select2. Este objeto será resgatado dentro da diretiva e utilizado. O objeto é opcional!
-				-->
-				<select style="width:300px" ng-model="estado" ria-select="estados_config">
+				<!-- Directive applied as an attribute with a value, that is the config object declared in the controller -->
+				<select style="width:300px" ng-model="state" ria-select="states_config">
 					<option></option>
-					<option ng-repeat="estado in estados" value="{{estado.value}}" ng-cloak>{{estado.name}}</option>
+					<option ng-repeat="state in states" value="{{state.value}}" ng-cloak>{{state.name}}</option>
 				</select>
 				<br>
-				<select style="width:300px" ng-model="cidade" ria-select="cidades_config">
+				
+				<!-- Directive applied as an attribute with a value, that is the config object declared in the controller -->
+				<select style="width:300px" ng-model="city" ria-select="cities_config">
 					<option></option>
-					<option ng-repeat="cidade in cidades" value="{{cidade.value}}" ng-cloak>{{cidade.name}}</option>
+					<option ng-repeat="city in cities" value="{{city.value}}" ng-cloak>{{city.name}}</option>
 				</select>
 				<br>
-				<button class="btn btn-large" ng-click="salvar()">Salvar</button>
-				<button class="btn btn-large" ng-click="load()">Carregar Info</button>
+				
+				<button class="btn btn-large" ng-click="save()">Save</button>
+				<button class="btn btn-large" ng-click="load()">Load Info</button>
 				<button class="btn btn-large" ng-click="reset()">Reset</button>
 				<br>
-				Estado: {{estado}}
+				State: {{state}}
 				<br>
-				Cidade: {{cidade}}
+				City: {{city}}
 				<br>
-				<code ng-show="result">{{result}} - JSON pronto para enviar ao server</code>
+				<code ng-show="result">{{result}} - JSON ready to send to server</code>
 
 			</div><!-- Final do escopo de atuação do controller Ctrl -->
 

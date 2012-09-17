@@ -22,13 +22,15 @@ rialabs.directive('riaSelect', function(){ /* O uso no template será como atrib
 					});
 				});
 
-				$model.$render = function() { /* O método render aplica o valor do model à view */
-					el.select2('val', $model.$viewValue); /* Aplica o valor atual do model à view. Ação específica do plugin select2() */
-				};
+				ng.$watch($attrs.ngModel, function(newValue){
+					el.select2('val', $model.$viewValue);  /* Aplica o valor atual do model à view. Ação específica do plugin select2() */
+					ng.$emit('model_changed');
+				});
 
 				setTimeout(function () { /* setTimeout como espécie de callLater, para o caso do model ja vir carregado */
 					el.select2('val', $model.$viewValue);  /* Aplica o valor atual do model à view. Ação específica do plugin select2() */
 				});
+
 			}		
 		}
 	};
@@ -38,41 +40,45 @@ rialabs.directive('riaSelect', function(){ /* O uso no template será como atrib
 	
 	var ng = $scope; /* Atalhos para evitar ficar digitando $scope todo o tempo */
 
-	ng.salvar = function(){ /* Alerta com o valor dos dois models. Este seria o momento de enviar a info para o server. */
-		ng.result = JSON.stringify({cidade: ng.cidade, estado: ng.estado});
+	ng.save = function(){ /* Alerta com o valor dos dois models. Este seria o momento de enviar a info para o server. */
+		ng.reset();
 	};
 
 	ng.load = function(){ /* Simula o carregamento de informações nos selects após uma consulta no DB, por ex. */
-		ng.cidade = "BHZ";
-		ng.estado = "MG";		
+		ng.city = "Chicago";
+		ng.state = "Illinois";		
 	};
 
 	ng.reset = function(){ /* Limpa os dois models e reseta os dois selects */
-		ng.cidade = "";
-		ng.estado = "";		
+		ng.city = "";
+		ng.state = "";		
 	};
 	
 	var init = function(){ /* Tudo o que é executado quando o script é carregado. */
 
-		ng.estados_config = {allowClear:true, placeholder:'Selecione um Estado'}; /* Objeto de configuração do select de Estados. Para saber mais, ver documentação do Select2: http://ivaynberg.github.com/select2/ */
+		ng.states_config = {allowClear:true, placeholder:'Select a state'}; /* Objeto de configuração do select de Estados. Para saber mais, ver documentação do Select2: http://ivaynberg.github.com/select2/ */
 
-		ng.estados = [ /* Data provider para o select de Estados. Numa situação real, os dados viriam do servidor. */
-			{value: 'SP', name: 'São Paulo'},
-			{value: 'MG', name: 'Minas Gerais'},
-			{value: 'PR', name: 'Paraná'}
+		ng.states = [ /* Data provider para o select de Estados. Numa situação real, os dados viriam do servidor. */
+			{value: 'Illinois', name: 'Illinois'},
+			{value: 'Mississippi', name: 'Mississippi'},
+			{value: 'Arkansas', name: 'Arkansas'}
 		];
 
-		ng.cidades_config = {allowClear:true, placeholder:'Selecione uma Cidade'}; /* Objeto de configuração do select de Cidades. Para saber mais, ver documentação do Select2: http://ivaynberg.github.com/select2/ */
+		ng.cities_config = {allowClear:true, placeholder:'Select a city'}; /* Objeto de configuração do select de Cidades. Para saber mais, ver documentação do Select2: http://ivaynberg.github.com/select2/ */
 
-		ng.cidades = [ /* Data provider para o select de Cidades. Numa situação real, os dados viriam do servidor. */
-			{value: 'SPO', name: 'São Paulo'},
-			{value: 'BHZ', name: 'Belo Horizonte'},
-			{value: 'CWB', name: 'Curitiba'}
+		ng.cities = [ /* Data provider para o select de Cidades. Numa situação real, os dados viriam do servidor. */
+			{value: 'Brookhaven', name: 'Brookhaven'},
+			{value: 'Chicago', name: 'Chicago'},
+			{value: 'Fayetteville', name: 'Fayetteville'}
 		];
 
  		/* Seta o valor inicial dos models dos selects */
-		ng.cidade = "CWB";
-		ng.estado = "PR";
+		ng.city = "Fayetteville";
+		ng.state = "Arkansas";
+
+		ng.$on('model_changed', function(){
+			ng.result = JSON.stringify({city: ng.city, state: ng.state});
+		});
 
 	}(); /* Executa o método init() imediatamente */
 });
