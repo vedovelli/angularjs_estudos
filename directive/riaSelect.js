@@ -1,34 +1,38 @@
 
-/* De forma encadeada, executa-se o método directive para criar a diretiva. */
-rialabs.directive('riaSelect', function(){ /* O uso no template será como atributo HTML: ria-select="{}" */
+rialabs.directive('riaSelect', function(){ /* This direct will be used as an HTML attribute: ria-select="{}" */
 	/* http://docs.angularjs.org/guide/directive */
 	return {
-		restrict: 'A', /* Limita o uso a um atributo HTML */
-		require: 'ngModel', /* Requisita o model associado ao elemento */
-		compile: function(tElement, tAttrs){ /* compila function, que é onde transformamos o <select> em select2(). Não pode ser na link function. */
+		restrict: 'A', /* Limitates the use as an HTML attrbute */
+		require: 'ngModel', /* Requires the model to be used in this directive */
+		compile: function(tElement, tAttrs){ /* In the compile function, the <select> element is transformed by the plugin. */
 			
-			var el = jQuery(tElement); /* O elemento recebido no construtor é um <select>, que com o uso da jQuery, será transformado em select2() */
-				el.select2(); /* Aplica ao objeto jQuery o plugin select2() */
+			var el = jQuery(tElement); /* tElement is a plain <select> */
+				el.select2(); /* Uses the plugin select2() */
 			
-			return function ($scope, $element, $attrs, $model){ /* De dentro da compile function, retorna-se a link function */
+			return function ($scope, $element, $attrs, $model){ /* From within compile function, the link function is returned */
 				
-				var ng = $scope;
+				var ng = $scope; /* this is just a shortcut to avoid type $scope all the time */
 
-				el.select2(ng[$attrs.riaSelect] || {}); /* Caso o objeto de configuração do select2() tenha sido passado, aplica-se ao elemento */
+				el.select2(ng[$attrs.riaSelect] || {}); /* If a config object was passed, apply it. Otherwise, apply just an empty object */
 				
-				el.on('change', function(){ /* Event listener no change do select2() */
-					ng.$apply(function() { /* Executa a função anônima no escopo */
-						$model.$setViewValue(el.select2('val')); /* Seta o valor do model com o valor do select2() */
+				el.on('change', function(){ /* Event listener for change on select2() */
+					ng.$apply(function() { /* Executes an anonymous function on $scope and triggers the notification process */
+						$model.$setViewValue(el.select2('val')); /* Applies the model value to select2() */
 					});
 				});
 
-				ng.$watch($attrs.ngModel, function(newValue){
-					el.select2('val', $model.$viewValue);  /* Aplica o valor atual do model à view. Ação específica do plugin select2() */
-					ng.$emit('model_changed');
+				/* IMPORTANT: this is necessary because the plugin Select2() hides the base <select> and shows
+				 * a new set o HTML tags in order to achieve its visual goal. 
+				 * So, if we change the model value, it will be applied to the
+				 * hidden <select> and not to what you see.
+				 */
+				ng.$watch($attrs.ngModel, function(newValue){ /* Watch for changes in the model */
+					el.select2('val', $model.$viewValue);  /* Applies the model value to Select2 */
+					ng.$emit('model_changed'); /* Triggers an event that will be helpful if you want to do something specific in the controller. */
 				});
 
-				setTimeout(function () { /* setTimeout como espécie de callLater, para o caso do model ja vir carregado */
-					el.select2('val', $model.$viewValue);  /* Aplica o valor atual do model à view. Ação específica do plugin select2() */
+				setTimeout(function () { /* Act as a call later function. This was the only way to get the initial values set on page loading. */
+					el.select2('val', $model.$viewValue);  /* Applies the model value to Select2 */
 				});
 
 			}		
@@ -36,49 +40,53 @@ rialabs.directive('riaSelect', function(){ /* O uso no template será como atrib
 	};
 })
 
-.controller('Ctrl', function($scope){ /* O controller associado à seção do template que contem os 2 selects */
+/* This is the controller that manages the behaviour. Note that no DOM
+ * manipulation is being made here, just data manipulation. Based on this,
+ * the directive can set the appearance and values in the view, since it 
+ * holds an instance of the controller.
+ */
+.controller('Ctrl', function($scope){ 
 	
-	var ng = $scope; /* Atalhos para evitar ficar digitando $scope todo o tempo */
+	var ng = $scope; 
 
-	ng.save = function(){ /* Alerta com o valor dos dois models. Este seria o momento de enviar a info para o server. */
+	ng.save = function(){ 
 		ng.reset();
 	};
 
-	ng.load = function(){ /* Simula o carregamento de informações nos selects após uma consulta no DB, por ex. */
+	ng.load = function(){ 
 		ng.city = "Chicago";
 		ng.state = "Illinois";		
 	};
 
-	ng.reset = function(){ /* Limpa os dois models e reseta os dois selects */
+	ng.reset = function(){ 
 		ng.city = "";
 		ng.state = "";		
 	};
 	
-	var init = function(){ /* Tudo o que é executado quando o script é carregado. */
+	var init = function(){ 
 
-		ng.states_config = {allowClear:true, placeholder:'Select a state'}; /* Objeto de configuração do select de Estados. Para saber mais, ver documentação do Select2: http://ivaynberg.github.com/select2/ */
+		ng.states_config = {allowClear:true, placeholder:'Select a state'}; 
 
-		ng.states = [ /* Data provider para o select de Estados. Numa situação real, os dados viriam do servidor. */
+		ng.states = [ 
 			{value: 'Illinois', name: 'Illinois'},
 			{value: 'Mississippi', name: 'Mississippi'},
 			{value: 'Arkansas', name: 'Arkansas'}
 		];
 
-		ng.cities_config = {allowClear:true, placeholder:'Select a city'}; /* Objeto de configuração do select de Cidades. Para saber mais, ver documentação do Select2: http://ivaynberg.github.com/select2/ */
+		ng.cities_config = {allowClear:true, placeholder:'Select a city'}; 
 
-		ng.cities = [ /* Data provider para o select de Cidades. Numa situação real, os dados viriam do servidor. */
+		ng.cities = [ 
 			{value: 'Brookhaven', name: 'Brookhaven'},
 			{value: 'Chicago', name: 'Chicago'},
 			{value: 'Fayetteville', name: 'Fayetteville'}
 		];
 
- 		/* Seta o valor inicial dos models dos selects */
-		ng.city = "Fayetteville";
+ 		ng.city = "Fayetteville";
 		ng.state = "Arkansas";
 
 		ng.$on('model_changed', function(){
 			ng.result = JSON.stringify({city: ng.city, state: ng.state});
 		});
 
-	}(); /* Executa o método init() imediatamente */
+	}();
 });
